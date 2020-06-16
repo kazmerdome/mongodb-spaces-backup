@@ -1,15 +1,13 @@
-FROM mongo:4.2
+FROM alpine:latest
 
-RUN apt-get update && \
-    apt-get install -y cron python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache mongodb-tools python3 py3-pip
 
 RUN pip3 install awscli
 
 ENV BACKUP_FOLDER=backup
 ENV REGION=fra1
 
-WORKDIR /mongodb-spaces-backup
+WORKDIR /usr/local/bin
 COPY entrypoint.sh ./
 COPY backup.sh ./
 COPY env_secrets_expand.sh ./
