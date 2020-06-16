@@ -35,6 +35,44 @@ docker run --rm \
   kazmerdome/mongodb-spaces-backup
 ```
 
+### Docker Swarm Example with secrets
+
+```yml
+services:
+  mongodb-spaces-backup:
+    image: kazmerdome/mongodb-spaces-backup:latest
+    environment:
+      # every day at 2am
+      - CRON_SCHEDULE="0 2 * * *"
+      - REGION=fra1
+      - BUCKET_NAME=your-bucket-name
+      - ACCESS_KEY_ID=DOCKER-SECRET->ACCESS_KEY_ID__SECRET
+      - SECRET_ACCESS_KEY=DOCKER-SECRET->SECRET_ACCESS_KEY__SECRET
+      - MONGO_URI=DOCKER-SECRET->MONGO_URI__SECRET
+      - MONGO_DB_NAME=DOCKER-SECRET->MONGO_DB_NAME__SECRET
+    secrets:
+      - ACCESS_KEY_ID__SECRET
+      - SECRET_ACCESS_KEY__SECRET
+      - MONGO_URI__SECRET
+      - MONGO_DB_NAME__SECRET
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+secrets:
+  ACCESS_KEY_ID__SECRET:
+    external: true
+  SECRET_ACCESS_KEY__SECRET:
+    external: true
+  MONGO_URI__SECRET:
+    external: true
+  MONGO_DB_NAME__SECRET:
+    external: true
+```
+
+
+
 ## Extra environmnet
 
 - `BACKUP_FOLDER` - Default value is `backup`.
@@ -42,6 +80,4 @@ docker run --rm \
 
 ## License
 
-[MIT](https://tldrlegal.com/license/mit-license)
-
-
+[MIT]
