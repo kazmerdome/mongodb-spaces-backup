@@ -43,7 +43,7 @@ services:
     image: kazmerdome/mongodb-spaces-backup:latest
     environment:
       # every day at 2am
-      - CRON_SCHEDULE="0 2 * * *"
+      - CRON_SCHEDULE=0 2 * * *
       - REGION=fra1
       - BUCKET_NAME=your-bucket-name
       - ACCESS_KEY_ID=DOCKER-SECRET->ACCESS_KEY_ID__SECRET
