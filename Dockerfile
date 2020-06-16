@@ -12,6 +12,7 @@ ENV REGION=fra1
 WORKDIR /mongodb-spaces-backup
 COPY entrypoint.sh ./
 COPY backup.sh ./
-RUN chmod +x ./entrypoint.sh && chmod +x ./backup.sh
+COPY env_secrets_expand.sh ./
+RUN chmod +x ./entrypoint.sh && chmod +x ./backup.sh && chmod +x ./env_secrets_expand.sh
 
 CMD ["sh", "entrypoint.sh"]

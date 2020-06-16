@@ -1,4 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
+source ./env_secrets_expand.sh
+
 BACKUP_NAME="$(date -u +%Y-%m-%d_%H-%M-%S)_UTC.gz"
 ENDPOINT="https://${REGION}.digitaloceanspaces.com"
 
